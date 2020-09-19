@@ -1,109 +1,112 @@
+/**
+ * @copyright 2020 alanzoe.com
+ */
 var element_symbols = [
     {
         "symbol": "H",
         "correct": "氢",
         "others": ["轻", "氦", "氧", "氮", "氯"]
     },
-    // {
-    //     "symbol": "He",
-    //     "correct": "氦",
-    //     "others": ["氢", "氧", "氩", "汞", "氮"]
-    // },
-    // {
-    //     "symbol": "C",
-    //     "correct": "碳",
-    //     "others": ["钙", "炭", "铜", "氮", "氧"]
-    // },
-    // {
-    //     "symbol": "N",
-    //     "correct": "氮",
-    //     "others": ["钠", "氧", "氢", "氦", "氯"]
-    // },
-    // {
-    //     "symbol": "O",
-    //     "correct": "氧",
-    //     "others": ["氢", "碳", "氮", "氦", "氯"]
-    // },
-    // {
-    //     "symbol": "Na",
-    //     "correct": "钠",
-    //     "others": ["氮", "纳", "镁", "钙", "铜"]
-    // },
-    // {
-    //     "symbol": "Mg",
-    //     "correct": "镁",
-    //     "others": ["锰", "汞", "铜", "铁", "钾"]
-    // },
-    // {
-    //     "symbol": "Al",
-    //     "correct": "铝",
-    //     "others": ["银", "氯", "钡", "锌", "锰"]
-    // },
-    // {
-    //     "symbol": "Si",
-    //     "correct": "硅",
-    //     "others": ["硫", "磷", "碳", "氯", "铜"]
-    // },
-    // {
-    //     "symbol": "P",
-    //     "correct": "磷",
-    //     "others": ["硫", "碳", "钾", "氮", "氧"]
-    // },
-    // {
-    //     "symbol": "S",
-    //     "correct": "硫",
-    //     "others": ["硅", "碳", "氧", "磷", "氮"]
-    // },
-    // {
-    //     "symbol": "Cl",
-    //     "correct": "氯",
-    //     "others": ["铝", "绿", "铜", "钙", "碳"]
-    // },
-    // {
-    //     "symbol": "K",
-    //     "correct": "钾",
-    //     "others": ["钠", "钙", "氮", "氧", "磷"]
-    // },
-    // {
-    //     "symbol": "Ca",
-    //     "correct": "钙",
-    //     "others": ["铜", "碳", "钾", "钡", "铁"]
-    // },
-    // {
-    //     "symbol": "Fe",
-    //     "correct": "铁",
-    //     "others": ["铜", "镁", "铝", "锌", "银"]
-    // },
-    // {
-    //     "symbol": "Cu",
-    //     "correct": "铜",
-    //     "others": ["铝", "氯", "碳", "钙", "锌"]
-    // },
-    // {
-    //     "symbol": "Ag",
-    //     "correct": "银",
-    //     "others": ["汞", "镁", "铝", "铁", "钠"]
-    // },
-    // {
-    //     "symbol": "Hg",
-    //     "correct": "汞",
-    //     "others": ["银", "氦", "氢", "镁", "铜"]
-    // },
-    // {
-    //     "symbol": "Mn",
-    //     "correct": "锰",
-    //     "others": ["镁", "猛", "铁", "锌", "银"]
-    // },
-    // {
-    //     "symbol": "Zn",
-    //     "correct": "锌",
-    //     "others": ["锰", "辛", "钠", "镁", "铝"]
-    // },
-    // {
-    //     "symbol": "Ba",
-    //     "correct": "钡",
-    //     "others": ["钙", "钯", "汞", "铁", "铜"]
-    // },
+    {
+        "symbol": "He",
+        "correct": "氦",
+        "others": ["氢", "氧", "氩", "汞", "氮"]
+    },
+    {
+        "symbol": "C",
+        "correct": "碳",
+        "others": ["钙", "炭", "铜", "氮", "氧"]
+    },
+    {
+        "symbol": "N",
+        "correct": "氮",
+        "others": ["钠", "氧", "氢", "氦", "氯"]
+    },
+    {
+        "symbol": "O",
+        "correct": "氧",
+        "others": ["氢", "碳", "氮", "氦", "氯"]
+    },
+    {
+        "symbol": "Na",
+        "correct": "钠",
+        "others": ["氮", "纳", "镁", "钙", "铜"]
+    },
+    {
+        "symbol": "Mg",
+        "correct": "镁",
+        "others": ["锰", "汞", "铜", "铁", "钾"]
+    },
+    {
+        "symbol": "Al",
+        "correct": "铝",
+        "others": ["银", "氯", "钡", "锌", "锰"]
+    },
+    {
+        "symbol": "Si",
+        "correct": "硅",
+        "others": ["硫", "磷", "碳", "氯", "铜"]
+    },
+    {
+        "symbol": "P",
+        "correct": "磷",
+        "others": ["硫", "碳", "钾", "氮", "氧"]
+    },
+    {
+        "symbol": "S",
+        "correct": "硫",
+        "others": ["硅", "碳", "氧", "磷", "氮"]
+    },
+    {
+        "symbol": "Cl",
+        "correct": "氯",
+        "others": ["铝", "绿", "铜", "钙", "碳"]
+    },
+    {
+        "symbol": "K",
+        "correct": "钾",
+        "others": ["钠", "钙", "氮", "氧", "磷"]
+    },
+    {
+        "symbol": "Ca",
+        "correct": "钙",
+        "others": ["铜", "碳", "钾", "钡", "铁"]
+    },
+    {
+        "symbol": "Fe",
+        "correct": "铁",
+        "others": ["铜", "镁", "铝", "锌", "银"]
+    },
+    {
+        "symbol": "Cu",
+        "correct": "铜",
+        "others": ["铝", "氯", "碳", "钙", "锌"]
+    },
+    {
+        "symbol": "Ag",
+        "correct": "银",
+        "others": ["汞", "镁", "铝", "铁", "钠"]
+    },
+    {
+        "symbol": "Hg",
+        "correct": "汞",
+        "others": ["银", "氦", "氢", "镁", "铜"]
+    },
+    {
+        "symbol": "Mn",
+        "correct": "锰",
+        "others": ["镁", "猛", "铁", "锌", "银"]
+    },
+    {
+        "symbol": "Zn",
+        "correct": "锌",
+        "others": ["锰", "辛", "钠", "镁", "铝"]
+    },
+    {
+        "symbol": "Ba",
+        "correct": "钡",
+        "others": ["钙", "钯", "汞", "铁", "铜"]
+    },
 ]
 
 var element_names = [
