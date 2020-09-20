@@ -9,6 +9,11 @@
     <title>化学元素小测试</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.2/css/bootstrap.min.css"
         crossorigin="anonymous">
+    <style>
+        body, .btn {
+            font-family: monospace;
+        }
+    </style>
 </head>
 
 <body class="">
@@ -34,14 +39,14 @@
                 <ul class="list-unstyled">
                     <li v-for="option in question.options" style="margin-top: 20px;">
                         <button v-on:click="answerQuestion(option)" v-bind:option="option" v-bind:class="{ active: option == answer, disabled: question_result && option != answer }"
-                            class="btn btn-outline-primary">{{ option }}</button>
+                            class="btn btn-outline-primary btn-lg">{{ option }}</button>
                     </li>
                 </ul>
             </div>
             <p class="row align-items-center justify-content-center">{{ question_result }}</span>
             <div class="row align-items-end justify-content-center" style="min-height: 100px;">
-                <button v-if="next_question" v-on:click="nextQuestion" class="btn btn-outline-primary">{{ next_question }}</button>
-                <button v-if="check_result" v-on:click="checkResult" class="btn btn-outline-primary">{{ check_result }}</button>
+                <button v-if="next_question" v-on:click="nextQuestion" class="btn btn-outline-primary btn-lg">{{ next_question }}</button>
+                <button v-if="check_result" v-on:click="checkResult" class="btn btn-outline-primary btn-lg">{{ check_result }}</button>
             </div>
         </div>
         <div v-if="results" class="jumbotron-fluid text-center">
