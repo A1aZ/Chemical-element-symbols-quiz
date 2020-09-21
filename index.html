@@ -6,7 +6,7 @@
     <meta name="force-rendering" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>化学元素小测试</title>
+    <title>化学小测试</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.2/css/bootstrap.min.css"
         crossorigin="anonymous">
     <style>
@@ -23,13 +23,9 @@
                 {{ start_screen_data.text}}</h1>
             <h2 class="row align-items-center justify-content-center" style="min-height: 100px;"><span
                     class="badge badge-primary">{{ start_screen_data.description }}</span></h2>
-            <div class="row align-items-end justify-content-center" style="min-height: 100px;">
-                <button v-on:click="startQuizSymbol"
-                    class="btn btn-outline-primary btn-lg">{{ start_screen_data.btn[0].title}}</button>
-            </div>
-            <div class="row align-items-end justify-content-center" style="min-height: 100px;">
-                <button v-on:click="startQuizName"
-                    class="btn btn-outline-primary btn-lg">{{ start_screen_data.btn[1].title}}</button>
+            <div v-for="btn in start_screen_data.btns" class="row align-items-end justify-content-center" style="margin-bottom: 30px;">
+                <button v-on:click="startQuiz(btn.mode)"
+                    class="btn btn-outline-primary btn-lg">{{ btn.title}}</button>
             </div>
         </div>
         <div v-if="question">
@@ -38,7 +34,7 @@
             <div class="row align-items-start justify-content-center">
                 <ul class="list-unstyled">
                     <li v-for="option in question.options" style="margin-top: 20px;">
-                        <button v-on:click="answerQuestion(option)" v-bind:option="option" v-bind:class="{ active: option == answer, disabled: question_result && option != answer }"
+                        <button v-on:click="answerQuestion(option)" v-bind:class="{ active: option == answer, disabled: question_result && option != answer }"
                             class="btn btn-outline-primary btn-lg">{{ option }}</button>
                     </li>
                 </ul>
@@ -52,6 +48,8 @@
         <div v-if="results" class="jumbotron-fluid text-center">
             <h2 class="display-3" style="min-height: 200px; padding-top: 100px;">答对{{ results.right_answers }}题</h2>
             <h3 class="display-4">（共{{ results.total }}题）</h3>
+            <h3 class="display-4"><span class="badge badge-primary">耗时：{{ results.time }}秒</span></h3>
+            <p>{{ results.title }}</p>
             <button v-on:click="reset"  class="btn btn-outline-danger" style="margin-top: 200px;">{{ btn_reset }}</button>
         </div>
     </div>
