@@ -164,10 +164,12 @@ var app = new Vue({
             this.question.correct = _question.correct
             let options = this.shuffle(_question.others)
             options = options.slice(0, 3)
-            options.push(this.question.correct)
-            options = this.shuffle(options)
+            let index = Math.floor(Math.random() * 4)
+            console.log(index)
+            options.splice(index, 0, this.question.correct)
             this.question.options = options
             this.question_result = null
+            console.log(this.question.options)
         },
         answerQuestion: function (answer, e) {
             if (this.question_result) return;
@@ -218,11 +220,10 @@ var app = new Vue({
         },
         shuffle: function (options) {
             for (let i = options.length - 1; i > 0; i--) {
-                let randomIndex = Math.floor(Math.random() * i);
-
-                let temp = options[i];
-                options[i] = options[randomIndex];
-                options[randomIndex] = temp;
+                const j = Math.floor(Math.random() * i)
+                const temp = options[i]
+                options[i] = options[j]
+                options[j] = temp
             }
             return options
         }
