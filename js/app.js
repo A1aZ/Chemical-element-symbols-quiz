@@ -165,11 +165,9 @@ var app = new Vue({
             let options = this.shuffle(_question.others)
             options = options.slice(0, 3)
             let index = Math.floor(Math.random() * 4)
-            console.log(index)
             options.splice(index, 0, this.question.correct)
             this.question.options = options
             this.question_result = null
-            console.log(this.question.options)
         },
         answerQuestion: function (answer, e) {
             if (this.question_result) return;
