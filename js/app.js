@@ -101,6 +101,7 @@ var app = new Vue({
             text: "化学小测试",
             description: "选择题库",
             btns: [
+                { title: "物质分类", mode: "substance_classification" },
                 { title: "元素符号 > 元素名称", mode: "symbol" },
                 { title: "元素名称 > 元素符号", mode: "name" },
                 { title: "根据元素符号选择化合价", mode: "valence" },
@@ -121,6 +122,10 @@ var app = new Vue({
     },
     methods: {
         startQuiz: function (mode) {
+            if (mode == "substance_classification") {
+                window.location.href = "/quick-quiz/substance_classification.html"
+                return;
+            }
             this.mode = mode
             this.start_time = Date.now()
             this.start_screen = false
