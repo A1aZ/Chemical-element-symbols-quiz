@@ -125,10 +125,10 @@ var app = new Vue({
         endTime: null,
     },
     methods: {
-        getUnixTime: function() {
-            return fetch('https://time.is/Unix_time_now')
-                .then(response => response.text())
-                .then(data => parseInt(data));
+        getServerTime: function() {
+            return fetch('https://quiz-api.alanzoe.com/time')
+                .then(response => response.json())
+                .then(data => data.time);
         },
         
         startQuiz: function(mode) {
@@ -142,67 +142,70 @@ var app = new Vue({
             }
 
             this.mode = mode
-            this.getUnixTime()
-                .then(time => {
-                    this.startTime = time;
-                    this.start_screen = false
-                    switch (this.mode) {
-                        case 'symbol':
-                            questions_data = element_symbols
-                            break;
-                        case 'valence':
-                            questions_data = valences
-                            break;
-                        case 'oxide':
-                            questions_data = oxides
-                            break;
-                        case 'name':
-                        default:
-                            questions_data = element_names
-                            break;
-                    }
-                    let question_list = Object.keys(questions_data)
-                    let length = question_list.length
-                    let random = 0
-                    questions = []
-                    while (length > 0) {
-                        random = parseInt(Math.random() * length)
-                        questions.push(question_list[random])
-                        question_list[random] = question_list[--length]
-                    }
-                    this.nextQuestion()
-                })
-                .catch(error => {
-                    console.error('获取开始时间失败:', error);
-                    // 可以在这里添加一个后备方案，比如使用本地时间
-                    this.startTime = Math.floor(Date.now() / 1000);
-                    this.start_screen = false
-                    switch (this.mode) {
-                        case 'symbol':
-                            questions_data = element_symbols
-                            break;
-                        case 'valence':
-                            questions_data = valences
-                            break;
-                        case 'oxide':
-                            questions_data = oxides
-                            break;
-                        case 'name':
-                        default:
-                            questions_data = element_names
-                            break;
-                    }
-                    let question_list = Object.keys(questions_data)
-                    let length = question_list.length
-                    let random = 0
-                    questions = []
-                    while (length > 0) {
-                        random = parseInt(Math.random() * length)
-                        questions.push(question_list[random])
-                        question_list[random] = question_list[--length]
-                    }
-                    this.nextQuestion()
-                });
+            fetch('https://quiz-api.alanzoe.com/start_quiz', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.startTime = data.time;
+                this.start_screen = false
+                switch (this.mode) {
+                    case 'symbol':
+                        questions_data = element_symbols
+                        break;
+                    case 'valence':
+                        questions_data = valences
+                        break;
+                    case 'oxide':
+                        questions_data = oxides
+                        break;
+                    case 'name':
+                    default:
+                        questions_data = element_names
+                        break;
+                }
+                let question_list = Object.keys(questions_data)
+                let length = question_list.length
+                let random = 0
+                questions = []
+                while (length > 0) {
+                    random = parseInt(Math.random() * length)
+                    questions.push(question_list[random])
+                    question_list[random] = question_list[--length]
+                }
+                this.nextQuestion()
+            })
+            .catch(error => {
+                console.error('获取开始时间失败:', error);
+                // 可以在这里添加一个后备方案，比如使用本地时间
+                this.startTime = Math.floor(Date.now() / 1000);
+                this.start_screen = false
+                switch (this.mode) {
+                    case 'symbol':
+                        questions_data = element_symbols
+                        break;
+                    case 'valence':
+                        questions_data = valences
+                        break;
+                    case 'oxide':
+                        questions_data = oxides
+                        break;
+                    case 'name':
+                    default:
+                        questions_data = element_names
+                        break;
+                }
+                let question_list = Object.keys(questions_data)
+                let length = question_list.length
+                let random = 0
+                questions = []
+                while (length > 0) {
+                    random = parseInt(Math.random() * length)
+                    questions.push(question_list[random])
+                    question_list[random] = question_list[--length]
+                }
+                this.nextQuestion()
+            });
         },
         nextQuestion: function () {
             this.next_question = null
@@ -245,50 +248,53 @@ var app = new Vue({
             }
         },
         checkResult: function() {
-            this.getUnixTime()
-                .then(time => {
-                    this.endTime = time;
-                    const duration = this.endTime - this.startTime;
-                    
-                    let title = ""
-                    for (let i in this.start_screen_data.btns) {
-                        let btn = this.start_screen_data.btns[i]
-                        if (btn.mode == this.mode) {
-                            title = btn.title
-                            break;
-                        }
+            fetch('https://quiz-api.alanzoe.com/end_quiz', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.endTime = data.time;
+                const duration = this.endTime - this.startTime;
+                
+                let title = ""
+                for (let i in this.start_screen_data.btns) {
+                    let btn = this.start_screen_data.btns[i]
+                    if (btn.mode == this.mode) {
+                        title = btn.title
+                        break;
                     }
-                    this.results = {
-                        "title": title,
-                        "right_answers": this.right_answers,
-                        "total": this.total,
-                        "time": duration,
-                        "wrong_questions": this.wrongQuestions
+                }
+                this.results = {
+                    "title": title,
+                    "right_answers": this.right_answers,
+                    "total": this.total,
+                    "time": duration,
+                    "wrong_questions": this.wrongQuestions
+                }
+                this.question = null
+            })
+            .catch(error => {
+                console.error('获取结束时间失败:', error);
+                // 后备方案
+                this.endTime = Math.floor(Date.now() / 1000);
+                const duration = this.endTime - this.startTime;
+                let title = ""
+                for (let i in this.start_screen_data.btns) {
+                    let btn = this.start_screen_data.btns[i]
+                    if (btn.mode == this.mode) {
+                        title = btn.title
+                        break;
                     }
-                    this.question = null
-                })
-                .catch(error => {
-                    console.error('获取结束时间失败:', error);
-                    // 后备方案
-                    this.endTime = Math.floor(Date.now() / 1000);
-                    const duration = this.endTime - this.startTime;
-                    let title = ""
-                    for (let i in this.start_screen_data.btns) {
-                        let btn = this.start_screen_data.btns[i]
-                        if (btn.mode == this.mode) {
-                            title = btn.title
-                            break;
-                        }
-                    }
-                    this.results = {
-                        "title": title,
-                        "right_answers": this.right_answers,
-                        "total": this.total,
-                        "time": duration,
-                        "wrong_questions": this.wrongQuestions
-                    }
-                    this.question = null
-                });
+                }
+                this.results = {
+                    "title": title,
+                    "right_answers": this.right_answers,
+                    "total": this.total,
+                    "time": duration,
+                    "wrong_questions": this.wrongQuestions
+                }
+                this.question = null
+            });
         },
         reset: function () {
             this.mode = null
