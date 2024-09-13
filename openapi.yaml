@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: Quiz API
+  description: API for managing quiz timing and results
+  version: 1.0.0
+servers:
+  - url: https://quiz-api.alanzoe.com
+paths:
+  /time:
+    get:
+      summary: Get current server time
+      description: Returns the current server time as a Unix timestamp
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  time:
+                    type: integer
+                    description: Current server time as Unix timestamp
+  /start_quiz:
+    post:
+      summary: Start a new quiz
+      description: Marks the start time of a new quiz attempt
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  time:
+                    type: integer
+                    description: Start time of the quiz as Unix timestamp
+  /end_quiz:
+    post:
+      summary: End a quiz
+      description: Marks the end time of a quiz attempt
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  time:
+                    type: integer
+                    description: End time of the quiz as Unix timestamp
