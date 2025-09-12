@@ -336,9 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   var detectDevTools = function() {
-    if (window.console && window.console.firebug || 
-        (window.outerHeight - window.innerHeight > 200) || 
-        (window.outerWidth - window.innerWidth > 200)) {
+    if (window.console && window.console.firebug) {
       showOverlay();
     }
   };
